@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mælketår</string>
+    <string name="dato_tid">Dato - Tid</string>
+    <string name="antal_ml_maelk_valgfri">Indtast antal ml mælk (valgfri)</string>
+    <string name="add_log">Tilføj log</string>
+    <string name="DateTimeHeader">Vælg tid og dato</string>
+</resources>
