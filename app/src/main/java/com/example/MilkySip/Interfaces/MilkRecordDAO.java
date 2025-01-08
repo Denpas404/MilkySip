@@ -2,6 +2,7 @@ package com.example.MilkySip.Interfaces;
 
 import com.example.MilkySip.Models.MilkRecord;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -9,21 +10,22 @@ import androidx.room.Update;
 
 import java.util.List;
 
+@Dao
 public interface MilkRecordDAO {
 
     @Insert
-    public void insert(MilkRecord milkRecord);
+    void add_milkRecord(MilkRecord milkRecord);
 
     @Update
-    public void update(MilkRecord milkRecord);
+    void update_milkRecord(MilkRecord milkRecord);
 
     @Delete
-    public void delete(MilkRecord milkRecord);
+    void delete_milkRecord(MilkRecord milkRecord);
 
     @Query("SELECT * FROM log_table WHERE id = :id")
-    public MilkRecord getMilkRecord(int id);
+    MilkRecord getMilkRecord(int id);
 
     @Query("SELECT * FROM log_table")
-    public List<MilkRecord> getAll();
+    List<MilkRecord> getAll();
 
 }

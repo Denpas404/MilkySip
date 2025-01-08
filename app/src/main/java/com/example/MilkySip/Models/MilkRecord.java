@@ -13,26 +13,26 @@ public class MilkRecord {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "date_time")
-    private Date dateTime;
+    @ColumnInfo(name = "timeStamp")
+    private String timeStamp;
+
     @ColumnInfo(name = "amount_of_milk")
     private Double amountOfMilk; // Bruger Double for at tillade decimaltal
 
-    // Getters og setters
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
-        // Fjern setter for id - id bør kun sættes af Room
+        this.id = id;
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public String getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public Double getAmountOfMilk() {
