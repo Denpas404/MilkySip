@@ -36,17 +36,28 @@
         android:calendarViewShown="false"
         android:datePickerMode="spinner" />
 
+    <TextView
+        android:id="@+id/milkAmountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/datePicker"
+        android:layout_marginTop="16dp"
+        android:text="@string/antal_ml_maelk_valgfri"
+        android:textAlignment="center"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/milkAmountInput"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/datePicker"
+        android:layout_below="@id/milkAmountTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:autofillHints=""
         android:padding="18dp"
-        android:hint="@string/antal_ml_maelk_valgfri"
+        android:hint="@string/_0"
+        android:textAlignment="textEnd"
         android:inputType="number" />
 
 

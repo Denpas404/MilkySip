@@ -4,4 +4,5 @@
     <string name="antal_ml_maelk_valgfri">Indtast antal ml mælk (valgfri)</string>
     <string name="add_log">Tilføj log</string>
     <string name="DateTimeHeader">Vælg tid og dato</string>
+    <string name="_0">0</string>
 </resources>
