@@ -1,24 +1,22 @@
 package com.example.MilkySip.Models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+
 import java.util.Date;
+
+@Entity(tableName = "log_table")
 
 public class MilkRecord {
 
+    @ColumnInfo(name = "id")
+    @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(name = "date_time")
     private Date dateTime;
+    @ColumnInfo(name = "amount_of_milk")
     private Double amountOfMilk; // Bruger Double for at tillade decimaltal
-
-    // Konstruktorer
-    public MilkRecord(int id, Date dateTime) {
-        this.id = id;
-        this.dateTime = dateTime;
-    }
-
-    public MilkRecord(int id, Date dateTime, Double amountOfMilk) {
-        this.id = id;
-        this.dateTime = dateTime;
-        this.amountOfMilk = amountOfMilk;
-    }
 
     // Getters og setters
     public int getId() {
@@ -26,7 +24,7 @@ public class MilkRecord {
     }
 
     public void setId(int id) {
-        this.id = id;
+        // Fjern setter for id - id bør kun sættes af Room
     }
 
     public Date getDateTime() {

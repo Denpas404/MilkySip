@@ -11,10 +11,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.MilkySip.Models.MilkRecord;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+
+    MilkRecord milkRecord;
+    Date dateTime;
+    double amountOfMilk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         picker.setIs24HourView(true);
 
-        //Get Date and time as day/month/year - HH:MM:SS
-        //textView_dateTime.setText(getDateTime());
+
     }
 
-    private String getDateTime() {
-        //Get Date and time as day/month/year - HH:MM:SS
-        return new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(Calendar.getInstance().getTime());
-    }
+
 }

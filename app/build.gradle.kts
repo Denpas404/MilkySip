@@ -33,6 +33,15 @@ android {
 
 dependencies {
 
+    implementation(libs.room.common)
+    implementation(libs.room.runtime.android)
+    annotationProcessor(libs.room.compiler)
+
+    // https://mvnrepository.com/artifact/androidx.room/room-runtime
+    runtimeOnly(libs.room.runtime)
+    // https://mvnrepository.com/artifact/org.apache.maven.plugin-tools/maven-plugin-annotations
+    compileOnly(libs.maven.plugin.annotations)
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
