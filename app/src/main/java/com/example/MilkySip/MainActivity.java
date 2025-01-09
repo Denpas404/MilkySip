@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
             });
         });
-
     }
 
     private void addMilkRecordInBackground(MilkRecord milkRecord) {
@@ -173,8 +172,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Milk record added", Toast.LENGTH_SHORT).show();
             });
         });
-
-
     }
 
     public String getCurrentDate() {
