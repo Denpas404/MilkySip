@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/gradient_background"
     android:padding="16dp">
 
     <TextView
@@ -19,12 +19,14 @@
 
     <TimePicker
         android:id="@+id/timePicker"
+        android:theme="@style/Theme.Mælketår"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/DateTimeHeader"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:timePickerMode="spinner" />
+        android:timePickerMode="spinner"
+        android:numbersInnerTextColor="@color/white"/>
 
     <DatePicker
         android:id="@+id/datePicker"
@@ -85,5 +87,17 @@
         android:minHeight="100dp"
         android:layout_centerHorizontal="true"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/refreshButton"/>
+
+    <Button
+        android:id="@+id/refreshButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/milkAmountInput"/>
 
 </RelativeLayout>

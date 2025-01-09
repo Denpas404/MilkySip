@@ -28,4 +28,9 @@ public interface MilkRecordDAO {
     @Query("SELECT * FROM log_table")
     List<MilkRecord> getAll();
 
+    @Query("SELECT * FROM log_table WHERE strftime('%Y-%m-%d', timestamp) = :currentDate ORDER BY timestamp ASC")
+    List<MilkRecord> getAllMilkRecordsForToday(String currentDate);
+
+    @Query("SELECT * FROM log_table ORDER BY timestamp ASC")
+    List<MilkRecord> getAllMilkRecordsSortedByOldest();
 }
