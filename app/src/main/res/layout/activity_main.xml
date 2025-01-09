@@ -78,14 +78,16 @@
         app:fabCustomSize="90dp"
         app:tint="@android:color/white" />
 
-    <TextView
-        android:id="@+id/record_id"
+    <Button
+        android:id="@+id/nextPageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/milkAmountInput"
-        android:minWidth="100dp"
-        android:minHeight="100dp"
+        android:layout_below="@+id/refreshButton"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="next_page"
+        android:textAlignment="center"
+        android:textSize="24sp"
         />
 
     <androidx.recyclerview.widget.RecyclerView

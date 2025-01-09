@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.dagger.hilt.android") // Hilt plugin
 }
 
 android {
@@ -41,6 +42,10 @@ dependencies {
     runtimeOnly(libs.room.runtime)
     // https://mvnrepository.com/artifact/org.apache.maven.plugin-tools/maven-plugin-annotations
     compileOnly(libs.maven.plugin.annotations)
+
+    //Dependency injection
+    implementation(libs.hilt.android)
+    annotationProcessor(libs.hilt.android.compiler)
 
     implementation(libs.appcompat)
     implementation(libs.material)
