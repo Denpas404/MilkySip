@@ -42,3 +42,4 @@ public class MainActivity extends AppCompatActivity {
         return new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(Calendar.getInstance().getTime());
     }
 }
+
