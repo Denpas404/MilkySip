@@ -33,4 +33,8 @@ public interface MilkRecordDAO {
 
     @Query("SELECT * FROM log_table ORDER BY timestamp ASC")
     List<MilkRecord> getAllMilkRecordsSortedByOldest();
+
+    @Query("SELECT * FROM log_table WHERE timeStamp LIKE :selectedDate ORDER BY timeStamp ASC")
+    List<MilkRecord> getMilkRecordsForDate(String selectedDate);
+
 }

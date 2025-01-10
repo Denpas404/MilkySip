@@ -37,18 +37,21 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint()
 public class MainActivity extends AppCompatActivity {
-@Inject MilkRecordDatabase milkRecordDatabase;
+    @Inject
+    MilkRecordDatabase milkRecordDatabase;
 
-
-    FloatingActionButton fab_addLog;
+    // Variables
     MilkRecord milkRecord;
     String time, date, timeStamp, amountOfMilk_String;
     double amountOfMilk_Double;
     List<MilkRecord> milkRecords_List;
-    //MilkRecordDatabase timeAndMilk_db;
 
-    androidx.recyclerview.widget.RecyclerView recyclerView;
+    // Adapter for RecyclerView
     private MilkRecordAdapter adapter;
+
+    // UI elements
+    FloatingActionButton fab_addLog;
+    androidx.recyclerview.widget.RecyclerView recyclerView;
 
     Button refreshButton; //TEMP
     Button nextPage; //TEMP
@@ -65,16 +68,18 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
+        // Set date and time picker
         TimePicker timePicker = findViewById(R.id.timePicker);
         DatePicker datePicker = findViewById(R.id.datePicker);
-
         timePicker.setIs24HourView(true);
 
+        // Set milk amount input
         EditText milkAmountInput = findViewById(R.id.milkAmountInput);
 
+        // Set FloatingActionButton
         fab_addLog = findViewById(R.id.addLogButton);
 
+        // Set database
         RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -87,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        //milkRecordDatabase = Room.databaseBuilder(getApplicationContext(), MilkRecordDatabase.class, "timeAndMilk_db").addCallback(myCallBack).build();
-
+        // Create a new MilkRecord object and add it to the database
         fab_addLog.setOnClickListener(view -> {
 
             // Get the selected date and time from the date and time pickers
@@ -169,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         executorService.execute(() -> {
             // Perform the database operation on a background thread
             try {
-                milkRecordDatabase  .milkRecordDAO().add_milkRecord(milkRecord);
+                milkRecordDatabase.milkRecordDAO().add_milkRecord(milkRecord);
             } catch (Exception e) {
                 e.printStackTrace();
                 String test = e.getMessage();

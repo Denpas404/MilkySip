@@ -36,6 +36,7 @@ dependencies {
 
     implementation(libs.room.common)
     implementation(libs.room.runtime.android)
+    implementation(libs.sqlite)
     annotationProcessor(libs.room.compiler)
 
     // https://mvnrepository.com/artifact/androidx.room/room-runtime
