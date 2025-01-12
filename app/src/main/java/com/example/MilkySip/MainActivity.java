@@ -124,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
         // TEMP
         nextPage = findViewById(R.id.nextPageButton);
         nextPage.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+//            Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+            Intent intent = new Intent(MainActivity.this, ShowCalendarAndLogsActivity.class);
             startActivity(intent);
         });
 

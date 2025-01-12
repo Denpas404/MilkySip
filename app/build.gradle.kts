@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.MilkySip"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -33,6 +33,11 @@ android {
 }
 
 dependencies {
+
+    //Calendar
+    implementation("com.kizitonwose.calendar:view:2.6.1")
+
+    implementation("com.kizitonwose.calendar:compose:2.6.1")
 
     implementation(libs.room.common)
     implementation(libs.room.runtime.android)
