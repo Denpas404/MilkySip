@@ -1,98 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/DateTimeHeader"
+    <RelativeLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/DateTimeHeader"
-        android:textAlignment="center"
-        android:textSize="24sp" />
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:paddingTop="16dp">
 
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:theme="@style/Theme.Mælketår"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/DateTimeHeader"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:timePickerMode="spinner"
-        android:numbersInnerTextColor="@color/white"/>
+        <!-- Your UI components -->
+        <TextView
+            android:id="@+id/DateTimeHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp"
+            android:text="@string/DateTimeHeader"
+            android:textAlignment="center"
+            android:textSize="16dp"
+            />
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/timePicker"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner" />
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/DateTimeHeader"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-10dp"
+            android:numbersInnerTextColor="@color/white"
+            android:theme="@style/Theme.Mælketår"
+            android:timePickerMode="spinner" />
 
-    <TextView
-        android:id="@+id/milkAmountTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/datePicker"
-        android:layout_marginTop="16dp"
-        android:text="@string/antal_ml_maelk_valgfri"
-        android:textAlignment="center"
-        android:textSize="24sp" />
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timePicker"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-20dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
 
-    <EditText
-        android:id="@+id/milkAmountInput"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/milkAmountTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:autofillHints=""
-        android:padding="18dp"
-        android:hint="@string/_0"
-        android:textAlignment="textEnd"
-        android:inputType="number" />
+        <TextView
+            android:id="@+id/milkAmountTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/datePicker"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-10dp"
+            android:text="@string/antal_ml_maelk_valgfri"
+            android:textAlignment="center"
+            android:textSize="24sp" />
 
+        <EditText
+            android:id="@+id/milkAmountInput"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/milkAmountTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp"
+            android:autofillHints=""
+            android:hint="@string/_0"
+            android:inputType="number"
+            android:padding="12dp"
+            android:textAlignment="textEnd" />
 
-    <!-- FloatingActionButton til at tilføje log -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/milkAmountInput"
+            android:layout_marginBottom="90dp" />
+
+    </RelativeLayout>
+
+    <!-- FloatingActionButton -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addLogButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
         android:backgroundTint="@color/Green"
         android:contentDescription="@string/add_log"
         android:src="@drawable/baseline_add_24"
-        app:fabCustomSize="90dp"
-        app:tint="@android:color/white" />
-
-    <TextView
-        android:id="@+id/record_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/milkAmountInput"
-        android:minWidth="100dp"
-        android:minHeight="100dp"
-        android:layout_centerHorizontal="true"
+        app:fabSize="normal"
+        app:tint="@android:color/white"
+        app:srcCompat="@drawable/baseline_add_24"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/milkAmountInput"/>
-
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
