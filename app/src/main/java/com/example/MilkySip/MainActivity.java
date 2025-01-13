@@ -34,6 +34,7 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
+    //region Variables
     FloatingActionButton fab_addLog;
     MilkRecord milkRecord;
     String time, date, timeStamp, amountOfMilk_String;
@@ -41,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
     List<MilkRecord> milkRecords_List;
     MilkRecordDatabase timeAndMilk_db;
 
-    TextView record_id; //TEMP
     androidx.recyclerview.widget.RecyclerView recyclerView;
     private MilkRecordAdapter adapter;
+    //endregion
 
 
     @SuppressLint("DefaultLocale")
@@ -59,24 +60,32 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        // Find TimePicker og DatePicker i layoutet
         TimePicker timePicker = findViewById(R.id.timePicker);
         DatePicker datePicker = findViewById(R.id.datePicker);
 
+
+        // Indstil TimePicker til at bruge 24-timers visning (i stedet for AM/PM)
         timePicker.setIs24HourView(true);
 
+        // Find EditText-komponenten for mælkemængde-input og knyt den til variablen
         EditText milkAmountInput = findViewById(R.id.milkAmountInput);
 
+        // Find FloatingActionButton for at tilføje en log og knyt den til variablen
         fab_addLog = findViewById(R.id.addLogButton);
 
+        // Opret en RoomDatabase.Callback for at håndtere specifik databaseadfærd
         RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
+                // Denne metode kaldes første gang databasen oprettes
             }
 
             @Override
             public void onOpen(@NonNull SupportSQLiteDatabase db) {
                 super.onOpen(db);
+                // Denne metode kaldes hver gang databasen åbnes
             }
         };
 
