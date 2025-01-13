@@ -59,11 +59,9 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
         // Find TimePicker og DatePicker i layoutet
         TimePicker timePicker = findViewById(R.id.timePicker);
         DatePicker datePicker = findViewById(R.id.datePicker);
-
 
         // Indstil TimePicker til at bruge 24-timers visning (i stedet for AM/PM)
         timePicker.setIs24HourView(true);
@@ -112,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
             // Call the method to add the milk record in the background
             addMilkRecordInBackground(milkRecord);
         });
+
+        getAllMilkRecordsInBackground();
 
     }
 
