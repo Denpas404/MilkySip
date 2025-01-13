@@ -24,7 +24,6 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.MilkySip.Models.MilkRecord;
-import com.example.MilkySip.Models.MilkRecordDTO;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -40,15 +39,11 @@ public class MainActivity extends AppCompatActivity {
     String time, date, timeStamp, amountOfMilk_String;
     double amountOfMilk_Double;
     List<MilkRecord> milkRecords_List;
-    List<MilkRecordDTO> milkRecords_DTO_List;
-
     MilkRecordDatabase timeAndMilk_db;
 
     TextView record_id; //TEMP
     androidx.recyclerview.widget.RecyclerView recyclerView;
     private MilkRecordAdapter adapter;
-
-    Button refreshButton; //TEMP
 
 
     @SuppressLint("DefaultLocale")
@@ -109,11 +104,6 @@ public class MainActivity extends AppCompatActivity {
             addMilkRecordInBackground(milkRecord);
         });
 
-        // Call the method to get all milk records in the background TEMP
-        refreshButton = findViewById(R.id.refreshButton);
-        refreshButton.setOnClickListener(view -> {
-            getAllMilkRecordsInBackground();
-        });
     }
 
     private void getAllMilkRecordsInBackground() {
