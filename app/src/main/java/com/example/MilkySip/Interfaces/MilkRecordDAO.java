@@ -22,15 +22,15 @@ public interface MilkRecordDAO {
     @Delete
     void delete_milkRecord(MilkRecord milkRecord);
 
-    @Query("SELECT * FROM log_table WHERE id = :id")
-    MilkRecord getMilkRecord(int id);
-
-    @Query("SELECT * FROM log_table")
-    List<MilkRecord> getAll();
+//    @Query("SELECT * FROM log_table WHERE id = :id")
+//    MilkRecord getMilkRecord(int id);
+//
+//    @Query("SELECT * FROM log_table")
+//    List<MilkRecord> getAll();
 
     @Query("SELECT * FROM log_table WHERE strftime('%Y-%m-%d', timestamp) = :currentDate ORDER BY timestamp ASC")
     List<MilkRecord> getAllMilkRecordsForToday(String currentDate);
 
-    @Query("SELECT * FROM log_table ORDER BY timestamp ASC")
-    List<MilkRecord> getAllMilkRecordsSortedByOldest();
+//    @Query("SELECT * FROM log_table ORDER BY timestamp ASC")
+//    List<MilkRecord> getAllMilkRecordsSortedByOldest();
 }
