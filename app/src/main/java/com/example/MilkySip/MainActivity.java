@@ -4,13 +4,11 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -31,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -140,21 +139,17 @@ public class MainActivity extends AppCompatActivity implements MilkRecordAdapter
 
         executorService.execute(() -> {
             // Perform the database operation on a background thread
-            try {
-                String currentDate = getCurrentDate();
-                milkRecords_List = timeAndMilk_db.milkRecordDAO().getAllMilkRecordsForToday(currentDate);
 
-                // Sort the list from GET ALL by timestamp in ascending order
-//                milkRecords_List = timeAndMilk_db.milkRecordDAO().getAllMilkRecordsSortedByOldest();
-            } catch (Exception e) {
-                e.printStackTrace();
-                String test = e.getMessage();
-            }
+            String currentDate = getCurrentDate();
+            milkRecords_List = timeAndMilk_db.milkRecordDAO().getAllMilkRecordsForToday(currentDate);
+
+            // Sort the list from GET ALL by timestamp in ascending order
+            // milkRecords_List = timeAndMilk_db.milkRecordDAO().getAllMilkRecordsSortedByOldest();
+
 
             // On finish, update the UI
             handler.post(() -> {
                 // Update the UI on the main thread
-
                 adapter = new MilkRecordAdapter(milkRecords_List, this);
                 recyclerView.setAdapter(adapter);
 
@@ -170,12 +165,7 @@ public class MainActivity extends AppCompatActivity implements MilkRecordAdapter
 
         executorService.execute(() -> {
             // Perform the database operation on a background thread
-            try {
-                timeAndMilk_db.milkRecordDAO().add_milkRecord(milkRecord);
-            } catch (Exception e) {
-                e.printStackTrace();
-                String test = e.getMessage();
-            }
+            timeAndMilk_db.milkRecordDAO().add_milkRecord(milkRecord);
 
             milkRecords_List.add(milkRecord);
 
@@ -191,7 +181,9 @@ public class MainActivity extends AppCompatActivity implements MilkRecordAdapter
     }
 
     public String getCurrentDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
         return sdf.format(new Date());
     }
 
@@ -235,8 +227,8 @@ public class MainActivity extends AppCompatActivity implements MilkRecordAdapter
                 .setView(view)
                 .setPositiveButton("Save", (dialog, which) -> {
                     // Hent de nye værdier fra DatePicker og TimePicker
-                    String date = String.format("%04d-%02d-%02d", datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
-                    String time = String.format("%02d:%02d:%02d", timePicker.getHour(), timePicker.getMinute(), 0);
+                    String date = String.format(Locale.US, "%04d-%02d-%02d", datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
+                    String time = String.format(Locale.US, "%02d:%02d:%02d", timePicker.getHour(), timePicker.getMinute(), 0);
                     String newTimeStamp = date + " " + time;
 
                     // Hent den nye mælkemængde fra EditText

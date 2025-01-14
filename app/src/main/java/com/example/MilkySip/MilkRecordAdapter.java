@@ -1,5 +1,6 @@
 package com.example.MilkySip;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.MilkySip.Models.MilkRecord;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 public class MilkRecordAdapter extends RecyclerView.Adapter<MilkRecordAdapter.MilkRecordViewHolder> {
 
-    private List<MilkRecord> milkRecordList;
-    private OnItemClickListener listener;
+    private final List<MilkRecord> milkRecordList;
+    private final OnItemClickListener listener;
 
     // Constructor
     public MilkRecordAdapter(List<MilkRecord> milkRecordList, OnItemClickListener listener) {
@@ -32,7 +36,12 @@ public class MilkRecordAdapter extends RecyclerView.Adapter<MilkRecordAdapter.Mi
     @Override
     public void onBindViewHolder(@NonNull MilkRecordViewHolder holder, int position) {
         MilkRecord milkRecord = milkRecordList.get(position);
-        holder.textViewDate.setText(milkRecord.getTimeStamp());
+
+        // Format and set the timeStamp
+        String formattedTimeStamp = formatTimeStamp(milkRecord.getTimeStamp());
+        holder.textViewDate.setText(formattedTimeStamp);
+
+//        holder.textViewDate.setText(milkRecord.getTimeStamp());
         holder.textViewMilk.setText(String.valueOf(milkRecord.getAmountOfMilk()));
     }
 
@@ -76,6 +85,19 @@ public class MilkRecordAdapter extends RecyclerView.Adapter<MilkRecordAdapter.Mi
             });
         }
     }
+
+    private String formatTimeStamp(String timeStamp) {
+        try {
+            DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.US);
+            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM - HH:mm", Locale.US);
+            LocalDateTime dateTime = LocalDateTime.parse(timeStamp, originalFormatter);
+            return dateTime.format(newFormatter);
+        } catch (Exception e) {
+            Log.e("MilkRecordAdapter", "Error formatting timestamp: " + timeStamp, e);
+            return timeStamp;
+        }
+    }
+
 
     // Interface for click events
     public interface OnItemClickListener {
