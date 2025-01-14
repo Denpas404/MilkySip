@@ -4,12 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
     <RelativeLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background"
-        android:paddingTop="16dp">
+        android:paddingTop="16dp"
+        android:fitsSystemWindows="true"
+        >
 
         <!-- Your UI components -->
         <TextView
@@ -76,6 +83,8 @@
             android:layout_marginBottom="90dp" />
 
     </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <!-- FloatingActionButton -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

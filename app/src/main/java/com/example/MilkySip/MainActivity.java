@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -12,8 +14,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-//import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -32,7 +34,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MilkRecordAdapter.OnItemClickListener {
 
     //region Variables
     FloatingActionButton fab_addLog;
@@ -112,8 +114,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getAllMilkRecordsInBackground();
-
     }
+
+    @Override
+    public void onEditClick(int position) {
+        showEditRecordDialog(position);
+    }
+
+    @Override
+    public void onDeleteClick(int position) {
+        showDeleteConfirmationDialog(position);
+    }
+
 
     private void getAllMilkRecordsInBackground() {
 
@@ -143,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             handler.post(() -> {
                 // Update the UI on the main thread
 
-                adapter = new MilkRecordAdapter(milkRecords_List);
+                adapter = new MilkRecordAdapter(milkRecords_List, this);
                 recyclerView.setAdapter(adapter);
 
             });
@@ -165,9 +177,14 @@ public class MainActivity extends AppCompatActivity {
                 String test = e.getMessage();
             }
 
+            milkRecords_List.add(milkRecord);
+
+
             // On finish, update the UI
             handler.post(() -> {
                 // Update the UI on the main thread
+                adapter.notifyItemInserted(milkRecords_List.size() - 1);
+                recyclerView.smoothScrollToPosition(milkRecords_List.size() - 1);
                 Toast.makeText(MainActivity.this, "Milk record added", Toast.LENGTH_SHORT).show();
             });
         });
@@ -177,5 +194,97 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(new Date());
     }
+
+
+    private void showEditRecordDialog(int position) {
+        // Inflater layoutet
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.dialog_edit_record, null);
+
+        // Find View-komponenterne i dialogboksen
+        TimePicker timePicker = view.findViewById(R.id.timePicker);
+        DatePicker datePicker = view.findViewById(R.id.datePicker);
+        EditText editAmountMilk = view.findViewById(R.id.editAmountMilk);
+
+        // Indstil TimePicker til 24-timers visning
+        timePicker.setIs24HourView(true);
+
+        // Hent det eksisterende MilkRecord objekt
+        MilkRecord record = milkRecords_List.get(position);
+
+        // Parse dato og tid fra TimeStamp
+        String[] dateTimeParts = record.getTimeStamp().split(" ");
+        String[] dateParts = dateTimeParts[0].split("-");
+        String[] timeParts = dateTimeParts[1].split(":");
+
+        // Indstil DatePicker og TimePicker med eksisterende værdier
+        datePicker.updateDate(
+                Integer.parseInt(dateParts[0]),  // År
+                Integer.parseInt(dateParts[1]) - 1,  // Måned (0-baseret)
+                Integer.parseInt(dateParts[2])   // Dag
+        );
+        timePicker.setHour(Integer.parseInt(timeParts[0]));
+        timePicker.setMinute(Integer.parseInt(timeParts[1]));
+
+        // Sæt den eksisterende mælkemængde i EditText
+        editAmountMilk.setText(String.valueOf(record.getAmountOfMilk()));
+
+        // Opret dialogen
+        new AlertDialog.Builder(this)
+                .setTitle("Edit Record")
+                .setView(view)
+                .setPositiveButton("Save", (dialog, which) -> {
+                    // Hent de nye værdier fra DatePicker og TimePicker
+                    String date = String.format("%04d-%02d-%02d", datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
+                    String time = String.format("%02d:%02d:%02d", timePicker.getHour(), timePicker.getMinute(), 0);
+                    String newTimeStamp = date + " " + time;
+
+                    // Hent den nye mælkemængde fra EditText
+                    double newAmountMilk = Double.parseDouble(editAmountMilk.getText().toString());
+
+                    // Opdater MilkRecord objektet
+                    record.setTimeStamp(newTimeStamp);
+                    record.setAmountOfMilk(newAmountMilk);
+
+                    // Udfør databaseopdatering i en baggrundstråd
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.execute(() -> {
+                        timeAndMilk_db.milkRecordDAO().update_milkRecord(record);
+
+                        // Opdater UI på hovedtråden
+                        runOnUiThread(() -> {
+                            adapter.notifyItemChanged(position);
+                            Toast.makeText(this, "Record updated", Toast.LENGTH_SHORT).show();
+                        });
+                    });
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    private void showDeleteConfirmationDialog(int position) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Record")
+                .setMessage("Are you sure you want to delete this record?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    // Udfør sletningen i en baggrundstråd
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.execute(() -> {
+                        MilkRecord record = milkRecords_List.get(position);
+                        timeAndMilk_db.milkRecordDAO().delete_milkRecord(record);
+
+                        // Fjern posten fra listen på hovedtråden
+                        runOnUiThread(() -> {
+                            milkRecords_List.remove(position);
+                            adapter.notifyItemRemoved(position);
+                            Toast.makeText(this, "Record deleted", Toast.LENGTH_SHORT).show();
+                        });
+                    });
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+
 }
 
